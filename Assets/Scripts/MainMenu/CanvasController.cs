@@ -31,6 +31,7 @@ public class CanvasController : MonoBehaviour
             else
             {
                 newBestPanel.SetActive(true);
+                PlayerPrefs.SetInt("NewBest", 0);
 
             }
         }

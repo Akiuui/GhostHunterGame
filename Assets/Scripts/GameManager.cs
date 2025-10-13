@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -20,9 +22,12 @@ public class GameManager : MonoBehaviour
     private float currentTime = 0f;
     private bool stopTimer = false;
 
+    public AudioClip finishedRoundAudio;
+    private AudioSource audioSource;
     void Start()
     {
         ghostOrganizer = GameObject.FindGameObjectWithTag("GhostContainer").transform;
+        audioSource = GetComponent<AudioSource>();
 
         SpawnGhosts();
 
@@ -53,13 +58,17 @@ public class GameManager : MonoBehaviour
         ghostHit++;
 
         if (ghostHit == ghostNo)
-            EndRound();
+        {
+            StartCoroutine(EndRound());
+        }
 
     }
 
-    private void EndRound()
+    IEnumerator EndRound()
     {
         print("Finished game");
+
+        stopTimer = true;
 
         if (PlayerPrefs.HasKey("HighScore" + ghostNo))
         {
@@ -88,9 +97,11 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetString("HighScore"+ghostNo, FormatTimer(currentTime));
             PlayerPrefs.SetInt("NewBest", 1);
             print("New Best");
-
         }
 
+        audioSource.PlayOneShot(finishedRoundAudio);
+
+        yield return new WaitForSeconds(3f);
 
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
 

@@ -73,7 +73,22 @@ public class HUDController : MonoBehaviour
         print("Clicked");
         isPaused = !isPaused;
 
+        if (isPaused)
+        {
+            //Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            //Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
 
     }
-  
+    public void ExitRound()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
+    }
+
 }

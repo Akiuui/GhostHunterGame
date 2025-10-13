@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - GhostContainer
+  - PhotoCamera
   layers:
   - Default
   - TransparentFX

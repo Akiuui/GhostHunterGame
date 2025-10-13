@@ -1,17 +1,24 @@
+using System.Collections;
 using UnityEngine;
 
 public class OnClickRunAnimation : MonoBehaviour
 {
     private Animator animator;
+
     void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     private void OnMouseDown()
     {
-        print("Mouse down");
         animator.SetBool("dissapear", true);
+
+        StartCoroutine(ResetState());
+    }
+    IEnumerator ResetState()
+    {
+        yield return new WaitForSeconds(3);
+        animator.SetBool("dissapear", false);
     }
 }
